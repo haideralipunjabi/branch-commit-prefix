@@ -1,0 +1,73 @@
+{
+  "name": "branch-commit-prefix",
+  "displayName": "Branch Commit Prefix",
+  "description": "Pre-fills the commit message with [type] <ticket>: based on the current branch name.",
+  "version": "0.1.0",
+  "publisher": "haideralipunjabi",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "main": "./extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "branchCommitPrefix.chooseType",
+        "title": "Choose Commit Type",
+        "category": "Branch Commit Prefix",
+        "icon": "$(tag)"
+      },
+      {
+        "command": "branchCommitPrefix.apply",
+        "title": "Re-apply Commit Prefix",
+        "category": "Branch Commit Prefix"
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "branchCommitPrefix.chooseType",
+          "when": "scmProvider == git",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Branch Commit Prefix",
+      "properties": {
+        "branchCommitPrefix.defaultChoreType": {
+          "type": "string",
+          "enum": [
+            "refactor",
+            "perf",
+            "style",
+            "test",
+            "docs",
+            "build",
+            "ci"
+          ],
+          "default": "refactor",
+          "description": "Commit type used for chore/ branches until you pick another one."
+        },
+        "branchCommitPrefix.promptOnChoreBranch": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show the commit type picker automatically when you switch to a chore/ branch."
+        }
+      }
+    }
+  }
+}
